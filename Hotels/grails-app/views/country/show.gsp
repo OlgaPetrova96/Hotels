@@ -4,6 +4,15 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'country.label', default: 'Country')}" />
         <title>Страна ${this.country.name}</title>
+        <style>
+        tr td {
+            text-align: right;
+        }
+        tr td + td
+         {
+            text-align: left;
+        }
+        </style>
     </head>
     <body>
         <content tag="nav">
@@ -29,7 +38,7 @@
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <table style="width: 10%; border: none; margin-left: 20%;">
+            <table style="width: 20%; border: none; margin-left: 20%;">
                 <tr>
                     <td><b>Название</b></td>
                     <td>${this.country.name}</td>
