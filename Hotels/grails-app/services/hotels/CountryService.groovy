@@ -1,18 +1,23 @@
 package hotels
 
-import grails.gorm.services.Service
+import grails.transaction.Transactional
 
-@Service(Country)
-interface CountryService {
+@Transactional
+class CountryService {
 
-    Country get(Serializable id)
+    def list() {
+        return Country.list()
+    }
 
-    List<Country> list(Map args)
+    def get(Serializable id) {
+        return Country.get(id)
+    }
 
-    Long count()
+    def save(Country country) {
+        return country.save()
+    }
 
-    void delete(Serializable id)
-
-    Country save(Country country)
-
+    def delete(Serializable id) {
+        Country.get(id).delete()
+    }
 }

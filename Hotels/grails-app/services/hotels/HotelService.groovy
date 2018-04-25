@@ -1,18 +1,27 @@
 package hotels
 
-import grails.gorm.services.Service
+import grails.transaction.Transactional
 
-@Service(Hotel)
-interface HotelService {
+@Transactional
+class HotelService {
 
-    Hotel get(Serializable id)
+    def list() {
+        return Hotel.list()
+    }
 
-    List<Hotel> list(Map args)
+    def count() {
+        return Hotel.count()
+    }
 
-    Long count()
+    def get(Serializable id) {
+        return Hotel.get(id)
+    }
 
-    void delete(Serializable id)
+    def save(Hotel hotel) {
+        return hotel.save()
+    }
 
-    Hotel save(Hotel hotel)
-
+    def delete(Serializable id) {
+        Hotel.get(id).delete()
+    }
 }

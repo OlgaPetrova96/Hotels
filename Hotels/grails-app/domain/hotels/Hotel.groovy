@@ -7,10 +7,11 @@ class Hotel {
     Integer stars
     String url
 
+    static belongsTo = [country: Country]
+
     static constraints = {
         name blank: false, maxSize: 255, unique: true
         stars blank: false, min: 1, max: 5
         url blank: true, matches: "^(http:\\/\\/|https:\\/\\/)[\\w\\d\\-\\.\\/]*", nullable: true
     }
-
 }

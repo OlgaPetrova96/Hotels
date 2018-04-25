@@ -1,7 +1,6 @@
 package hotels
 
 import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
 
 class HotelController {
 
@@ -9,44 +8,32 @@ class HotelController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond hotelService.list(params), model:[hotelCount: hotelService.count()]
+    def index() {
+        [hotelList: Hotel.list(),
+         hotelCount: Hotel.count()]
     }
 
     def result(String q) {
-        LinkedList<Hotel> res = hotelService.list().findAll{h -> h.name.toLowerCase().contains(q)}
-        respond res, model:[hotelCount: res.size()]
+        def result = Hotel.withCriteria {
+            like("name".toLowerCase(), "%${q.toLowerCase()}%")
+        }
+        [hotelList: result,
+         hotelCount: result.size()]
     }
 
     def show(Long id) {
-        respond hotelService.get(id)
+        [hotel : Hotel.get(id)]
     }
 
     def create() {
-        respond new Hotel(params)
+        def hotel = new Hotel(name: params.name, country: params.country, stars: params.stars, url: params.url)
+        [hotel: hotel]
     }
 
     def save(Hotel hotel) {
-        if (hotel == null) {
-            notFound()
-            return
-        }
+        hotel.save()
 
-        try {
-            hotelService.save(hotel)
-        } catch (ValidationException e) {
-            respond hotel.errors, view:'create'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'hotel.label', default: 'Hotel'), hotel.id])
-                redirect hotel
-            }
-            '*' { respond hotel, [status: CREATED] }
-        }
+        redirect(action: "show")
     }
 
     def edit(Long id) {
@@ -54,52 +41,19 @@ class HotelController {
     }
 
     def update(Hotel hotel) {
-        if (hotel == null) {
-            notFound()
-            return
-        }
 
         try {
             hotelService.save(hotel)
         } catch (ValidationException e) {
-            respond hotel.errors, view:'edit'
-            return
+            [errors: hotel.errors, view:'edit']
         }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'hotel.label', default: 'Hotel'), hotel.id])
-                redirect hotel
-            }
-            '*'{ respond hotel, [status: OK] }
-        }
     }
 
     def delete(Long id) {
-        if (id == null) {
-            notFound()
-            return
-        }
 
         hotelService.delete(id)
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'hotel.label', default: 'Hotel'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'hotel.label', default: 'Hotel'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
+        redirect(action:"index")
     }
 }
