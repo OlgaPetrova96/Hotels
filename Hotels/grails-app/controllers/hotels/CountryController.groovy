@@ -1,6 +1,6 @@
 package hotels
 
-import grails.validation.ValidationException
+import javax.xml.bind.ValidationException
 
 import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.OK
@@ -29,15 +29,15 @@ class CountryController {
 
         try {
             countryService.save(country)
-        } catch (ValidationException e) {
-            [errors: country.errors, view:'create']
+        } catch (Exception error) {
+            [err: country.errors, view:'create']
             return
         }
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'country.label', default: 'Country'), country.id])
-                redirect(action: "show", id: country.id)
+                flash.message = message(code: 'default.created.message', args: [message(code: 'country.label', default: 'Country'), country.name])
+                redirect(action: "index")
             }
             '*' { [country: country, status: CREATED] }
         }
@@ -58,8 +58,8 @@ class CountryController {
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'country.label', default: 'Country'), country.id])
-                redirect(action: "show", id: country.id)
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'country.label', default: 'Country'), country.name])
+                redirect(action: "index")
             }
             '*'{ [country: country, status: OK] }
         }

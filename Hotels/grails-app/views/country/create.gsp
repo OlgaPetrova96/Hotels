@@ -38,13 +38,20 @@
     <g:if test="${flash.message}">
         <div class="message" role="status">${flash.message}</div>
     </g:if>
-    <g:hasErrors bean="${this.country}">
+    <g:hasErrors bean="${country}">
         <ul class="errors" role="alert">
-            <g:eachError bean="${this.country}" var="error">
+            <g:eachError var="err" bean="${country}">
                 <li <g:if test="${error in org.springframework.validation.ValidationError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
             </g:eachError>
         </ul>
     </g:hasErrors>
+    %{--<g:hasErrors bean="${this.country}">--}%
+        %{--<ul class="errors" role="alert">--}%
+            %{--<g:eachError bean="${this.country}" var="error">--}%
+                %{--<li <g:if test="${error in org.springframework.validation.ValidationError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>--}%
+            %{--</g:eachError>--}%
+        %{--</ul>--}%
+    %{--</g:hasErrors>--}%
     <g:form resource="${this.country}" method="POST" class="navbar-form">
         <table style="width: 20%; border: none; margin-left: 20%;">
             <tr>
