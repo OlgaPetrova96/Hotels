@@ -36,7 +36,11 @@ class CountryController {
 
         request.withFormat {
             form multipartForm {
+<<<<<<< HEAD
                 flash.message = message(code: 'default.created.message', args: [message(code: 'country.label', default: 'Country'), country.name])
+=======
+                flash.message = message(code: 'default.created.message', args: [message(code: 'country.label', default: 'Country'), country.id])
+>>>>>>> fd8ec0eab22febd4dad1a60b4756ad07ba39a851
                 redirect(action: "index")
             }
             '*' { [country: country, status: CREATED] }
@@ -58,7 +62,11 @@ class CountryController {
 
         request.withFormat {
             form multipartForm {
+<<<<<<< HEAD
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'country.label', default: 'Country'), country.name])
+=======
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'country.label', default: 'Country'), country.id])
+>>>>>>> fd8ec0eab22febd4dad1a60b4756ad07ba39a851
                 redirect(action: "index")
             }
             '*'{ [country: country, status: OK] }
