@@ -36,7 +36,7 @@ class HotelController {
     }
 
     def edit(Long id) {
-        respond hotelService.get(id)
+        [hotel: hotelService.get(id)]
     }
 
     def update(Hotel hotel) {
@@ -47,6 +47,7 @@ class HotelController {
             [errors: hotel.errors, view:'edit']
         }
 
+        redirect(action: "index")
     }
 
     def delete(Long id) {

@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <td><b>Звездность</b></td>
-                        <td><g:field class="form-control" type="text" name="stars" required="true" value="${this.hotel.stars}"/></td>
+                        <td><g:field class="form-control" type="number" name="stars" required="true" value="${this.hotel.stars}"/></td>
                     </tr>
                     <tr>
                         <td><b>Страна</b></td>
@@ -53,7 +53,7 @@
                     </tr>
                     <tr>
                         <td><b>Сайт</b></td>
-                        <td><g:field class="form-control" type="text" name="url" required="false" value="${this.hotel.url}"/></td>
+                        <td><g:field class="form-control" type="text" name="url" required="false" pattern="^(http:\\/\\/|https:\\/\\/)[\\w\\d\\-\\.\\/]*" value="${this.hotel.url}"/></td>
                     </tr>
                 </table>
                 <fieldset class="buttons">
