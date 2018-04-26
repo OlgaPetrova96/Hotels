@@ -18,11 +18,7 @@ class HotelController {
 
     def result(String q) {
         def result = Hotel.withCriteria {
-            or {
-                like("name", "%${q.toLowerCase()}%")
-                like("name", "%${q}%")
-                like("name", "%${q.toUpperCase()}%")
-            }
+            ilike("name", "%${q}%")
         }
         [hotelList: result,
          hotelCount: result.size()]
