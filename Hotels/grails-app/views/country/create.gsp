@@ -17,7 +17,7 @@
 <body>
 <content tag="nav">
     <li>
-        <a href="Hotels/index" role="button">Поиск</a>
+        <a href="/Hotels/index" role="button">Поиск</a>
     </li>
     <li>
         <g:link controller="country">Справочник стран</g:link>

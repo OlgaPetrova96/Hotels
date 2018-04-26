@@ -2,6 +2,9 @@ package hotels
 
 import grails.validation.ValidationException
 
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.OK
+
 
 class CountryController {
 
@@ -23,8 +26,21 @@ class CountryController {
     }
 
     def save(Country country) {
-        countryService.save(country)
-        redirect(action: "index")
+
+        try {
+            countryService.save(country)
+        } catch (ValidationException e) {
+            [errors: country.errors, view:'create']
+            return
+        }
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'country.label', default: 'Country'), country.id])
+                redirect(action: "show", id: country.id)
+            }
+            '*' { [country: country, status: CREATED] }
+        }
     }
 
     def edit(Long id) {
@@ -37,9 +53,16 @@ class CountryController {
             countryService.save(country)
         } catch (ValidationException e) {
             [errors: country.errors, view:'edit']
+            return
         }
 
-        redirect(action: "index")
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'country.label', default: 'Country'), country.id])
+                redirect(action: "show", id: country.id)
+            }
+            '*'{ [country: country, status: OK] }
+        }
     }
 
     def delete(Long id) {

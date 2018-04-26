@@ -2,6 +2,9 @@ package hotels
 
 import grails.validation.ValidationException
 
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.OK
+
 class HotelController {
 
     HotelService hotelService
@@ -31,7 +34,21 @@ class HotelController {
     }
 
     def save(Hotel hotel) {
-        hotelService.save(hotel)
+
+        try {
+            hotelService.save(hotel)
+        } catch (ValidationException e) {
+            [errors: hotel.errors, view:'create']
+            return
+        }
+
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.created.message', args: [message(code: 'hotel.label', default: 'Hotel'), hotel.id])
+//                redirect(action: "show", id: hotel.id)
+//            }
+//            '*' { [hotel: hotel, status: CREATED] }
+//        }
         redirect(action: "index")
     }
 
@@ -45,8 +62,16 @@ class HotelController {
             hotelService.save(hotel)
         } catch (ValidationException e) {
             [errors: hotel.errors, view:'edit']
+            return
         }
 
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.updated.message', args: [message(code: 'hotel.label', default: 'Hotel'), hotel.id])
+//                redirect(action: "show", id: hotel.id)
+//            }
+//            '*'{ [hotel: hotel, status: OK] }
+//        }
         redirect(action: "index")
     }
 
