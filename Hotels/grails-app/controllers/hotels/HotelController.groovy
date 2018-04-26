@@ -31,9 +31,8 @@ class HotelController {
     }
 
     def save(Hotel hotel) {
-        hotel.save()
-
-        redirect(action: "show")
+        hotelService.save(hotel)
+        redirect(action: "index")
     }
 
     def edit(Long id) {

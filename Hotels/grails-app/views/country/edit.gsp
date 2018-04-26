@@ -17,14 +17,12 @@
                 <g:link controller="hotel">Справочник отелей</g:link>
             </li>
         </content>
-        <a href="#edit-country" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link class="list" action="index">Список стран</g:link></li>
                 <li><g:link class="create" action="create">Добавить страну</g:link></li>
             </ul>
         </div>
-        <div id="edit-country" class="content scaffold-edit" role="main">
             <h1>Изменить страну</h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
@@ -38,10 +36,16 @@
             </g:hasErrors>
             <g:form resource="${this.country}" method="PUT">
                 <g:hiddenField name="version" value="${this.country?.version}" />
-                <fieldset class="form">
-                    <f:field bean="country" property="name" label="Название"/>
-                    <f:field bean="country" property="capital" label="Столица"/>
-                </fieldset>
+                <table style="width: 20%; border: none; margin-left: 20%;">
+                    <tr>
+                        <td><b>Название</b></td>
+                        <td><g:field class="form-control" type="text" name="name" required="true" unique="true" value="${this.country.name}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Столица</b></td>
+                        <td><g:field class="form-control" type="text" name="capital" required="true" value="${this.country.capital}"/></td>
+                    </tr>
+                </table>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="Изменить" />
                 </fieldset>

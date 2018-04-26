@@ -3,7 +3,7 @@
     <head>
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'country.label', default: 'Country')}" />
-        <title>Страна ${this.country.name}</title>
+        <title>Страна</title>
         <style>
         tr td {
             text-align: right;

@@ -20,13 +20,12 @@ class CountryController {
     }
 
     def create() {
-        [country: new Country(name: params.name, capital: params.capital)]
+        [country: new Country()]
     }
 
     def save(Country country) {
-        country.save()
-
-        redirect(action: "show")
+        countryService.save(country)
+        redirect(action: "index")
     }
 
     def edit(Long id) {
@@ -40,6 +39,8 @@ class CountryController {
         } catch (ValidationException e) {
             [errors: country.errors, view:'edit']
         }
+
+        redirect(action: "index")
     }
 
     def delete(Long id) {

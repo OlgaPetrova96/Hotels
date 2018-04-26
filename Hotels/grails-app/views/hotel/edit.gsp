@@ -38,12 +38,24 @@
             </g:hasErrors>
             <g:form resource="${this.hotel}" method="PUT">
                 <g:hiddenField name="version" value="${this.hotel?.version}" />
-                <fieldset class="form">
-                    <f:field bean="hotel" property="name" label="Название"/>
-                    <f:field bean="hotel" property="country" label="Страна"/>
-                    <f:field bean="hotel" property="stars" label="Звездность"/>
-                    <f:field bean="hotel" property="url" label="Сайт"/>
-                </fieldset>
+                <table style="width: 20%; border: none; margin-left: 20%;">
+                    <tr>
+                        <td><b>Название</b></td>
+                        <td><g:field class="form-control" type="text" name="name" required="true" value="${this.hotel.name}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Звездность</b></td>
+                        <td><g:field class="form-control" type="text" name="stars" required="true" value="${this.hotel.stars}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Страна</b></td>
+                        <td><g:field class="form-control" type="text" name="country" required="true" value="${this.hotel.country}"/></td>
+                    </tr>
+                    <tr>
+                        <td><b>Сайт</b></td>
+                        <td><g:field class="form-control" type="text" name="url" required="false" value="${this.hotel.url}"/></td>
+                    </tr>
+                </table>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="Изменить" />
                 </fieldset>

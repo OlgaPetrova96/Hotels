@@ -4,6 +4,15 @@
     <meta name="layout" content="main" />
     <g:set var="entityName" value="${message(code: 'country.label', default: 'Country')}" />
     <title>Добавление страны</title>
+    <style>
+    tr td {
+        text-align: right;
+    }
+    tr td + td
+    {
+        text-align: left;
+    }
+    </style>
 </head>
 <body>
 <content tag="nav">
@@ -36,30 +45,21 @@
             </g:eachError>
         </ul>
     </g:hasErrors>
-    <g:form resource="${this.country}" method="POST">
-        <fieldset class="form">
-            <div class="form-group">
-                <input id="name" type="text" name="name" class="form-control">
-            </div>
-            <div class="form-group">
-                <input id="capital" type="text" name="capital" class="form-control">
-            </div>
-        </fieldset>
+    <g:form resource="${this.country}" method="POST" class="navbar-form">
+        <table style="width: 20%; border: none; margin-left: 20%;">
+            <tr>
+                <td><b>Название</b></td>
+                <td><g:field class="form-control" type="text" name="name" required="true" /></td>
+            </tr>
+            <tr>
+                <td><b>Столица</b></td>
+                <td><g:field class="form-control" type="text" name="capital" required="true"/></td>
+            </tr>
+        </table>
         <fieldset class="buttons">
             <g:submitButton name="create" class="save" value="Добавить" />
         </fieldset>
     </g:form>
-    %{--<form class="navbar-form" action="/Hotels/country/create" method="POST">--}%
-        %{--<div class="form-group">--}%
-            %{--<input id="name" type="text" name="name" class="form-control">--}%
-        %{--</div>--}%
-        %{--<div class="form-group">--}%
-            %{--<input id="capital" type="text" name="capital" class="form-control">--}%
-        %{--</div>--}%
-        %{--<fieldset class="buttons">--}%
-            %{--<g:submitButton name="create" class="save" value="Добавить" />--}%
-        %{--</fieldset>--}%
-    %{--</form>--}%
 </div>
 </body>
 </html>
